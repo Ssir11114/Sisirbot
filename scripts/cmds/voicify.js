@@ -17,10 +17,10 @@ async function voicify(api, event, args, message) {
         }
 
         const shortUrl = attachment.url;
-        const response1 = await axios.get(`https://voicify-tool.onrender.com/kshitiz?url=${encodeURIComponent(shortUrl)}`);
+        const response1 = await axios.get(`https://voicify.onrender.com/kshitiz?url=${encodeURIComponent(shortUrl)}`);
         const filename = response1.data.file_name;
 
-        const response2 = await axios.get(`https://voicify-tool.onrender.com/process?filename=${filename}`);
+        const response2 = await axios.get(`https://voicify.onrender.com/process?filename=${filename}`);
         const instrumentalUrl = response2.data.instrumental_path;
 
         const fileName = `${filename}.mp3`;

@@ -61,6 +61,7 @@
     "hello.js",
     "write.js",
     "war.js",
-    "prefix.js"
+    "prefix.js",
+    "cbin.js"
   ]
 }

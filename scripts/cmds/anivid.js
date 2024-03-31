@@ -8,7 +8,7 @@ module.exports = {
     aliases: [],
     author: "Kshitiz",
     version: "1.0",
-    cooldowns: 0,
+    cooldowns: 10,
     role: 0,
     shortDescription: "Get random anime video",
     longDescription: "Get random anime video from provided API",
@@ -20,7 +20,7 @@ module.exports = {
     api.setMessageReaction("🕐", event.messageID, (err) => {}, true);
 
     try {
-      const response = await axios.get("https://anivid.onrender.com/kshitiz");
+      const response = await axios.get("https://ani-vid.onrender.com/kshitiz");
       const postData = response.data.posts;
       const randomIndex = Math.floor(Math.random() * postData.length);
       const randomPost = postData[randomIndex];

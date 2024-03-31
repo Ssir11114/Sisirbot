@@ -3,7 +3,7 @@ const { getStreamFromURL, shortenURL, randomString } = global.utils;
 
 async function a(animeName) {
   try {
-    const response = await axios.get(`https://anime-query.vercel.app/kshitiz?anime=${encodeURIComponent(animeName)}`);
+    const response = await axios.get(`https://aniwatch-go.vercel.app/kshitiz?anime=${encodeURIComponent(animeName)}`);
     return response.data.episodes;
   } catch (error) {
     console.error(error);
@@ -13,7 +13,7 @@ async function a(animeName) {
 
 async function b(episodeName) {
   try {
-    const response = await axios.get(`https://anime-ep.vercel.app/kshitiz?episode=${encodeURIComponent(episodeName)}`);
+    const response = await axios.get(`https://aniwatch-dl.vercel.app/kshitiz?episode=${encodeURIComponent(episodeName)}`);
     return response.data.downloadLinks;
   } catch (error) {
     console.error(error);
@@ -36,7 +36,7 @@ module.exports = {
     name: "aniwatch",
     author: "Kshitiz",
     version: "2.0",
-    cooldowns: 0,
+    cooldowns: 5,
     role: 0,
     shortDescription: "Watch anime",
     longDescription: "Get anime episode download links",

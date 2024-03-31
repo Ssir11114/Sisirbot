@@ -7,15 +7,15 @@ module.exports = {
   config: {
     name: "album",
     aliases: ["gallery"],
-    version: "1.0",
+    version: "2.0",
     author: "Vex_kshitiz",
     countDown: 5,
     role: 0,
     shortDescription: "album or gallery to save attachments of users",
-    longDescription: "save your videos audios or images with speecific title for each attachments.",
+    longDescription: "save your videos audios or images with specific title for each attachments.",
     category: "utility",
     guide: {
-      en: "To store a attachments: {p}album add {title}\nTo view specific albums content: {p}album audio / {p}album video / {p}album image\nTo view saved attachments: {p}album show {title} ",
+      en: "To store an attachment: {p}album add {title}\nTo view specific albums content: {p}album audio / {p}album video / {p}album image\nTo view saved attachments: {p}album show {title} ",
     },
   },
 
@@ -35,7 +35,6 @@ module.exports = {
       await fs.ensureDir(videoPath);
       await fs.ensureDir(audioPath);
 
-     
       if (command === "add" && title && event.messageReply && event.messageReply.attachments && event.messageReply.attachments.length > 0) {
         const attachment = event.messageReply.attachments[0];
         const attachmentType = attachment.type.split("/")[0]; 
@@ -71,10 +70,7 @@ module.exports = {
             reject(err);
           });
         });
-      }
-
-     
-      if (command === "audio" || command === "video" || command === "image") {
+      } else if (command === "audio" || command === "video" || command === "image") {
         const files = await fs.readdir(join(albumPath, command + "s"));
 
         if (files.length === 0) {
@@ -87,7 +83,18 @@ module.exports = {
           message += `${index + 1}. ${file.replace(/\.[^/.]+$/, "")}\n`;
         });
 
-        api.sendMessage(message, event.threadID, event.messageID);
+        api.sendMessage(message, event.threadID, (err, info) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+          global.GoatBot.onReply.set(info.messageID, {
+            commandName: "album",
+            senderID: senderID,
+            messageType: command,
+            files: files,
+          });
+        });
       } else if (command === "show" || command === "view") {
         let found = false;
         for (let type of ["audio", "video", "image"]) {
@@ -134,14 +141,40 @@ module.exports = {
           message = "All albums are currently empty.";
         }
         api.sendMessage(message, event.threadID, event.messageID);
-        } else {
-          api.sendMessage("To store a attachments: {p}album add {title}\nTo view specific albums content: {p}album audio / {p}album video / {p}album image\nTo view saved attachments: {p}album show {title}", event.threadID, event.messageID);
-        } 
-        } catch (err) {
-        console.error(err);
-        api.sendMessage("An error occurred.", event.threadID, event.messageID);
-        }
-        },
-        };
+      } else {
+        api.sendMessage("Invalid command. Please use the correct syntax.", event.threadID, event.messageID);
+      }
+    } catch (err) {
+      console.error(err);
+      api.sendMessage("An error occurred.", event.threadID, event.messageID);
+    }
+  },
 
+  onReply: async function ({ api, event, Reply, args }) {
+    const { commandName, senderID, messageType, files } = Reply;
 
+    if (commandName !== "album" || senderID !== event.senderID || !messageType || !files) {
+      return;
+    }
+
+    const fileIndex = parseInt(args[0], 10);
+
+    if (isNaN(fileIndex) || fileIndex <= 0 || fileIndex > files.length) {
+      api.sendMessage({ body: "Invalid input.\nPlease provide a valid number." }, event.threadID, event.messageID);
+      return;
+    }
+
+    const selectedFile = files[fileIndex - 1];
+    const filePath = join("./albums", senderID, messageType + "s", selectedFile);
+
+    try {
+      const fileStream = fs.createReadStream(filePath);
+      api.sendMessage({ body: `Here is your ${messageType}:`, attachment: fileStream }, event.threadID, event.messageID);
+    } catch (error) {
+      console.error(error);
+      api.sendMessage({ body: "An error occurred while processing the file.\nPlease try again later." }, event.threadID);
+    } finally {
+      global.GoatBot.onReply.delete(event.messageID);
+    }
+  },
+};

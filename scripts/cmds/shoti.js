@@ -4,38 +4,49 @@ const path = require("path");
 
 module.exports = {
   config: {
-    name: "wifey",
-    aliases: ["shoti"],
+    name: "shoti",
+    aliases: [],
     author: "Kshitiz",
-    version: "1.0",
+    version: "2.0",
     cooldowns: 10,
     role: 0,
-    shortDescription: "Get random wifey ",
-    longDescription: "Get random wifey video",
+    shortDescription: "Get random shoti video",
+    longDescription: "Get random shoti video",
     category: "fun",
     guide: "{p}shoti",
   },
 
   onStart: async function ({ api, event, args, message }) {
-    api.setMessageReaction("💐", event.messageID, (err) => {}, true);
+    api.setMessageReaction("🕐", event.messageID, (err) => {}, true);
 
     try {
-      const response = await axios.get(`https://wifey-shoti.onrender.com/kshitiz`, { responseType: "stream" });
+      const response = await axios.get("https://shoti-waifu.onrender.com/kshitiz");
+      const postData = response.data.posts;
+      const randomIndex = Math.floor(Math.random() * postData.length);
+      const randomPost = postData[randomIndex];
+
+      const videoUrls = randomPost.map(url => url.replace(/\\/g, "/"));
+
+      const selectedUrl = videoUrls[Math.floor(Math.random() * videoUrls.length)];
+
+      const videoResponse = await axios.get(selectedUrl, { responseType: "stream" });
 
       const tempVideoPath = path.join(__dirname, "cache", `${Date.now()}.mp4`);
-
       const writer = fs.createWriteStream(tempVideoPath);
-      response.data.pipe(writer);
+      videoResponse.data.pipe(writer);
 
       writer.on("finish", async () => {
         const stream = fs.createReadStream(tempVideoPath);
-
-        message.reply({
-          body: `Heres your shoti 😸`,
+        const user = response.data.user || "@user_unknown";
+        await message.reply({
+          body: `username:"${user}"`,
           attachment: stream,
         });
-
-        api.setMessageReaction("🌸", event.messageID, (err) => {}, true);
+        api.setMessageReaction("✅", event.messageID, (err) => {}, true);
+        fs.unlink(tempVideoPath, (err) => {
+          if (err) console.error(err);
+          console.log(`Deleted ${tempVideoPath}`);
+        });
       });
     } catch (error) {
       console.error(error);

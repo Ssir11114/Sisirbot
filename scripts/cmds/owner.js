@@ -20,8 +20,8 @@ config: {
       gender: 'Male',
       age: '18',
       height: '5.10',
-      facebookLink: 'https://www.facebook.com/m.zenesha',
-      nick: 'Mr perfect'
+      facebookLink: 'https://www.facebook.com/profile.php?id=100057678948022',
+      nick: 'Mr SANNY'
     };
 
     const bold = 'https://i.imgur.com/DDO686J.mp4'; // Replace with your Google Drive videoid link https://drive.google.com/uc?export=download&id=here put your video id

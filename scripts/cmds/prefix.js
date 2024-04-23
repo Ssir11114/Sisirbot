@@ -3,7 +3,7 @@ const { utils } = global;
 
 module.exports = {
 	config: {
-		name: "prefix2",
+		name: "prefix",
 		version: "1.4",
 		author: "NTKhang",
 		countDown: 5,
@@ -45,7 +45,7 @@ module.exports = {
 			confirmThisThread: "Please react to this message to confirm change prefix in your box chat",
 			successGlobal: "Changed prefix of system bot to: %1",
 			successThisThread: "Changed prefix in your box chat to: %1",
-			myPrefix: "🌐 System prefix: %1\n🛸 Your box chat prefix: %2"
+			myPrefix: "┏━━ [ 𝗦𝗔𝗡𝗡𝗬-𝗕𝗢𝗧 ]━━➣\n┃🔰 𝗦𝘆𝘀𝘁𝗲𝗺 𝗽𝗿𝗲𝗳𝗶𝘅: [ %1 ]\n┃🔰 𝗬𝗼𝘂𝗿 𝗯𝗼𝘅 𝗰𝗵𝗮𝘁 𝗽𝗿𝗲𝗳𝗶𝘅: [ %2 ]\n┗━━━━━━━━━━━━➢"
 		}
 	},
 
@@ -94,10 +94,16 @@ module.exports = {
 		}
 	},
 
-	onChat: async function ({ event, message, getLang }) {
-		if (event.body && event.body.toLowerCase() === "prefix")
-			return () => {
-				return message.reply(getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID)));
-			};
-	}
-};
+  onChat: async function ({ event, message, usersData, getLang }) {
+    const data = await usersData.get(event.senderID);
+    const name = data.name;
+    const xyrene = {
+      body: getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID)),
+      attachment: await global.utils.getStreamFromURL("https://i.imgur.com/h9KPbnj.mp4")
+        };
+    if (event.body && event.body.toLowerCase() === "prefix")
+      return () => {
+        return message.reply(xyrene);
+      };
+  }
+  };

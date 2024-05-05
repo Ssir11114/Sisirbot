@@ -1,4 +1,4 @@
-+cmd install prefix2.js const fs = require("fs-extra");
+ const fs = require("fs-extra");
 const { utils } = global;
 
 module.exports = {

@@ -6,7 +6,7 @@ const ytdl = require("ytdl-core");
 const yts = require("yt-search");
 
 async function video(api, event, args, message) {
-    api.setMessageReaction("⏳", event.messageID, (err) => {}, true);
+    api.setMessageReaction("⏱️", event.messageID, (err) => {}, true);
     try {
         let title = '';
 
@@ -47,8 +47,8 @@ async function video(api, event, args, message) {
 
         writer.on('finish', () => {
             const videoStream = fs.createReadStream(filePath); 
-            message.reply({ body: `🎉 Playing: ${title}`, attachment: videoStream });
-            api.setMessageReaction("⌛", event.messageID, () => {}, true);
+            message.reply({ body: `🚀 Playing: ${title}`, attachment: videoStream });
+            api.setMessageReaction("⏰", event.messageID, () => {}, true);
         });
 
         writer.on('error', (error) => {
@@ -65,7 +65,7 @@ module.exports = {
     config: {
         name: "video", 
         version: "1.0",
-        author: "MR.AYAN | MR.SANY", 
+        author: "MR.SANY", 
         countDown: 10,
         role: 0,
         shortDescription: "play video from youtube",

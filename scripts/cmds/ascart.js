@@ -7,7 +7,7 @@ module.exports = {
     name: "ascart",
     aliases: ["asciiart"],
     version: "1.0",
-    author: "MR.SANNY",
+    author: "Vex_Kshitiz",
     shortDescription: "Convert images to ASCII art",
     longDescription: "Convert images to ASCII art.",
     category: "image",

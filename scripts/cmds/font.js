@@ -20,7 +20,7 @@ module.exports = {
     version: "1.0",
     author: "Aryan Chauhan",
     countDown: 0,
-    role: 0,
+    role: 2,
     shortDescription: "",
     longDescription: "",
     category: "text",

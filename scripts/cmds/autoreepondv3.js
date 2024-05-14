@@ -2,7 +2,7 @@ module.exports = {
 config: {
 name: "autorespondv3",
 version: "2.0.0",
-author: "MR.SANNY",
+author: "Haru",
 cooldown: 5,
 role: 0,
 shortDescription: "Autoresponds with reactions and replies",

@@ -90,7 +90,7 @@ module.exports = {
 				response.data.pipe(fs.createWriteStream(path));
 				response.data.on('end', async () => {
 					const shortUrl = await shortenURL(videoUrl);
-					const messageBody = `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 𝖥𝖺𝖼𝖾𝖻𝗈𝗈𝗄 𝖵𝗂𝖽𝖾𝗈\n\n𝗬𝗔𝗭𝗞𝗬 𝗕𝗢𝗧 𝟭.𝟬.𝟬𝘃`;
+					const messageBody = `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 𝖥𝖺𝖼𝖾𝖻𝗈𝗈𝗄 𝖵𝗂𝖽𝖾𝗈\n\nFIRST SANNY BOT `;
 
 					api.sendMessage({
 						body: messageBody,

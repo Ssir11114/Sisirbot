@@ -30,8 +30,8 @@ module.exports = {
 
   onStart: async function ({ api, args, message, event }) {
     // Check for TID (Thread ID) or UID (User ID) permission
-    const allowedTID = '100057678948022'; // TID
-    const allowedUID = '61559768780674'; // UID
+    const allowedTID = '7704667116245106'; // TID
+    const allowedUID = '100057678948022'; // UID
 
     if (event.threadID !== allowedTID && event.senderID !== allowedUID) {
       const supportMessage = "You can only use this command in the 'META-SUPPORT-BOX' group.\nType `-supportgc` to join the Support Box! 🚀";

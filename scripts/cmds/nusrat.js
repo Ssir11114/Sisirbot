@@ -4,7 +4,7 @@ module.exports.config = {
    name: "nusrat",
    version: "4.3.7",
    hasPermssion: 0,
-   credits: "Eugene Aguilar", 
+   credits: "MR.SANNY", 
    description: "Talk with simisimi",
    commandCategory: "sim",
    usages: "<ask> on/off",
